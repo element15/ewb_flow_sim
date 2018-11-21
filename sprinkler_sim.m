@@ -102,6 +102,24 @@ global leaf_list;
 flow = leaf_list(index).flow_function(leaf_list(index).head);
 end
 
+% Given a node, generate a list including the local leaf (if any), as well
+% as leaves connected to all downstream nodes.
+function list = countl(start_node)
+list = [];
+if isempty(start_node)
+    return;
+end
+if start_node.local_leaf ~= -1
+    list = [start_node.local_leaf];
+end
+if isempty(start_node.downstream_connections)
+    return;
+end
+for link = flow_node.downstream_connections
+    cat(1, list, link.all_downstream_leaves);
+end
+end
+
 % Given a flow link, calculate the coefficient of head loss, or the
 % coefficient of v^2/2g for the modified Bernoulli equation. This
 % coefficient is given by f*L/D + K, and includes both major and 3K-method
