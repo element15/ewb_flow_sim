@@ -226,7 +226,97 @@ a_out = a_val;
 R2_out = R2_val;
 end
 
+% This function builds the full system structure, and returns (1) the root
+% node of the system, `root`, as well as (2) a list of sprinkler heads
+% (leaves) which are referenced by nodes in the system, `leaves`.
+function [root, leaves] = init()
+% Define the leaves first
+leaf_count = 32;
+leaves = cell(leaf_count, 1);
+global a;
+flow_func = @(v) a * v.^0.5;
+for i = 1:leaf_count
+    leaves{i} = flow_leaf();
+    leaves{i}.flow_function = flow_func;
+end
 
+% Start from the bottom and work towards the root.
+% NOTE: 4 in^0.3 = 1.9 ft^0.3 (units of k_d)
+% All nodes modeled as tees, assuming flanged joins. Data from Neutrium 
+% (https://neutrium.net/fluid_flow/pressure-loss-from-fittings-3k-method)
+k_thru = [150, 0.05, 1.9];
+k_turn = [800, 0.28, 1.9];
+
+AN = flow_node([], 32);
+AMAN = flow_link(AN, pvc('1/2'), 330, -160.08, countl(AN), k_thru);
+AM = flow_node(AMAN, 31);
+ALAM = flow_link(AM, pvc('1'), 100, 0.0, countl(AM), k_thru); %!dz
+AL = flow_node(ALAM, 30);
+AKAL = flow_link(AL, pvc('1'), 100, 0.0, countl(AL), k_thru); %!dz
+AK = flow_node(AKAL, 29);
+AHAK = flow_link(AK, pvc('1'), 100, -49.33, countl(AK), k_thru);
+
+AU = flow_node([], 27);
+AHAU = flow_link(AU, pvc('1/2'), 108.9, 0.0, countl(AU), k_turn); %!dz
+AI = flow_node([], 28);
+AHAI = flow_link(AI, pvc('1/2'), 108.9, 0.0, countl(AI), k_turn); %!dz
+
+AH = flow_node([AHAU, AHAK, AHAI], -1);
+AGAH = flow_link(AH, pvc('1'), 50.0, 0.0, countl(AH), k_thru); %!dz
+AG = flow_node(AGAH, -1);
+ADAG = flow_link(AG, pvc('1'), 50.0, -25.88, countl(AG), k_thru);
+
+AF = flow_node([], 25);
+ADAF = flow_link(AF, pvc('1/2'), 99.0, 0.0, countl(AF), k_turn); %!dz
+AE = flow_node([], 26);
+ADAE = flow_link(AE, pvc('1/2'), 99.0, 0.0, countl(AE), k_turn); %!dz
+
+AD = flow_node([ADAF, ADAE, ADAG], -1);
+AAAD = flow_link(AD, pvc('1'), 99.0, 0.0, countl(AD), k_thru); %!dz
+
+AC = flow_node([], 23);
+AAAC = flow_link(AC, pvc('1/2'), 89.1, 0.0, countl(AC), k_turn); %!dz
+AB = flow_node([], 24);
+AAAB = flow_link(AB, pvc('1/2'), 89.1, 0.0, countl(AB), k_turn); %!dz
+
+AA = flow_node([AAAB, AAAC, AAAD], -1);
+ZAA = flow_link(AA, pvc('1'), 49.5, -117.79, countl(AA), k_thru);
+Z = flow_node(ZAA, 22);
+WZ = flow_link(Z, pvc('1'), 49.5, 0.0, countl(Z), k_thru); %!dz
+
+Y = flow_node([], 20);
+WY = flow_link(Y, pvc('1/2'), 99.0, 0.0, countl(Y), k_turn); %!dz
+X = flow_node([], 21);
+WX = flow_link(X, pvc('1/2'), 99.0, 0.0, countl(X), k_turn); %!dz
+
+W = flow_node([WX, WY, WZ], -1);
+SW = flow_link(W, pvc('1'), 100.0, -20.88, countl(W), k_thru);
+S = flow_node(SW, -1);
+TS = flow_link(S, pvc('2'), 99.0, 0.0, countl(S), k_thru); %!dz
+T = flow_node(TS, 19);
+RT = flow_link(T, pvc('2'), 66.0, -18.29, countl(T), k_turn);
+
+U = flow_node([], 18);
+RU = flow_link(U, pvc('1/2'), 136, -43.21, countl(U), k_turn);
+R = flow_node([RU, RT], -1);
+
+PR = flow_link(R, pvc('2'), 36, -15.5, countl(R), k_thru);
+Q = flow_node([], 17);
+PQ = flow_link(Q, pvc('1/2'), 52.0, -15.5, countl(Q), k_turn);
+P = flow_node([PQ, PR], -1);
+
+NP = flow_link(P, pvc('2'), 124, -30.66, countl(P), k_thru);
+O = flow_node([], 16);
+NO = flow_link(O, pvc('1/2'), 61, 0, countl(O), k_turn); %!dz
+N = flow_node([NO, NP], 15);
+LN = flow_link(N, pvc('2'), 16, 0, countl(N), k_thru); %!dz
+
+M = flow_node([], 14);
+LM = flow_link(M, pvc('1/2'), 51, -1.25, countl(M), k_turn);
+L = flow_node([LM, LN], -1);
+
+root = [];
+end
 
 
 
