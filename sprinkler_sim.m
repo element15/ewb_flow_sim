@@ -4,6 +4,7 @@ global rho;
 global gamma;
 global rough;
 global g;
+global a;
 % Properties of water at 40 deg F
 mu    = 32.34e-6; % viscosity, lbf*s/ft^2
 rho   =  1.94   ; % density, slug/ft^3
@@ -24,12 +25,17 @@ v_dot_data = [6.83, 7.77, 8.75, 9.53, 10.30, 10.82, 11.87, 12.29, ...
 [a, R2] = square_root_fit(p_data, v_dot_data);
 v_dot = @(p) a .* p.^0.5; % Function for the curve fit
 
+global leaf_list;
+[root, leaf_list] = init();
+
+
 
 
 % Given a node in the system, update the inbound head of every connected
-% link, and call update_link_pressure() on that link. Calling this function
-% on the head node of the system will recursively solve the pressure in the
-% system.
+% link, and call update_link_pressure() on each of those links, which will
+% recursively solve all downstream parts of the system. Note that minor
+% head losses due to node geometry are handled by the affected downstream
+% link.
 function node_out = update_node_pressure(node_in)
 global leaf_list;
 % Exit condition
@@ -51,6 +57,8 @@ end
 node_out = node_in;
 end
 
+% Given a link in the system, calculate the head loss in that link,
+% including minor losses incurred at the upstream connection
 function link_out = update_link_pressure(link_in)
 % Note that there is no formal exit condition, because every link should be
 % connected to nodes at both the upstream and downstream ends
