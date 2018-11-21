@@ -19,16 +19,16 @@ classdef flow_link
         K_d                         double      % ft^0.3
     end
     methods
-        function obj = flow_link(dn, dia, l, dz, leaves, k1, kinf, kd)
+        function obj = flow_link(dn, dia, l, dz, leaves, k)
             obj = flow_link;
             obj.downstream_node = dn;
             obj.diameter = dia;
             obj.length = l;
             obj.delta_z = dz;
             obj.all_downstream_leaves = leaves;
-            obj.K_1 = k1;
-            obj.K_inf = kinf;
-            obj.K_d = kd;
+            obj.K_1 = k(1);
+            obj.K_inf = k(2);
+            obj.K_d = k(3);
         end
     end
 end
