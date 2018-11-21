@@ -133,7 +133,7 @@ end
 
 % Given a nominal pipe size, return the inner diameter of the corresponding
 % Schedule 40 PVC pipe. Returned diameter is given in *feet*
-function d_inner = pvc_diameter(d_nominal)
+function d_inner = pvc(d_nominal)
 d = 0;
 switch d_nominal
     case '1/2'
