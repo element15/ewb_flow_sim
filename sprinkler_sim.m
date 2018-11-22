@@ -233,7 +233,7 @@ function [root, leaves] = init()
 leaf_count = 32;
 leaves = cell(leaf_count, 1);
 global a;
-flow_func = @(v) a * v.^0.5;
+flow_func = @(v) min(a * v.^0.5, 0.05);
 for i = 1:leaf_count
     leaves{i} = flow_leaf();
     leaves{i}.flow_function = flow_func;
