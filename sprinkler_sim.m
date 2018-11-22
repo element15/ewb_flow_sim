@@ -46,7 +46,7 @@ for i = 1:length(node_in.downstream_connections)
 end
 i = node_in.local_leaf;
 if i ~= -1
-    leaf_list(i).head = node_in.head;
+    leaf_list{i}.head = node_in.head;
 end
 
 node_out = node_in;
