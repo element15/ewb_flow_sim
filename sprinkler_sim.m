@@ -34,15 +34,12 @@ global leaf_list;
 function node_out = update_node_pressure(node_in)
 global leaf_list;
 % Exit condition
-if isempty(node_in.downstream_connections)
-    node_out = node_in;
-    return;
-end
-
-for i = 1:length(node_in.downstream_connections)
-    node_in.downstream_connections(i).head_in = node_in.head;
-    node_in.downstream_connections(i) = ...
-        update_link_pressure(node_in.downstream_connections(i));
+if ~isempty(node_in.downstream_connections)
+    for i = 1:length(node_in.downstream_connections)
+        node_in.downstream_connections(i).head_in = node_in.head;
+        node_in.downstream_connections(i) = ...
+            update_link_pressure(node_in.downstream_connections(i));
+    end
 end
 i = node_in.local_leaf;
 if i ~= -1
