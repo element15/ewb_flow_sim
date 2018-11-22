@@ -1,3 +1,4 @@
+clear;
 % Defined values
 global mu;
 global rho;
