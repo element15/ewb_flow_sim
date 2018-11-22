@@ -20,6 +20,7 @@ v_dot_data = [6.83, 7.77, 8.75, 9.53, 10.30, 10.82, 11.87, 12.29, ...
 [a, R2] = square_root_fit(p_data, v_dot_data);
 v_dot = @(p) a .* p.^0.5; % Function for the curve fit
 
+% Initialize the system structure
 global leaf_list;
 [root, leaf_list] = init();
 
@@ -237,9 +238,9 @@ for i = 1:leaf_count
 end
 
 % Start from the bottom and work towards the root.
-% NOTE: 4 in^0.3 = 1.9 ft^0.3 (units of k_d)
 % All nodes modeled as tees, assuming flanged joins. Data from Neutrium 
-% (https://neutrium.net/fluid_flow/pressure-loss-from-fittings-3k-method)
+% (https://neutrium.net/fluid_flow/...
+% pressure-loss-from-fittings-excess-head-k-method/)
 k_thru = 0.4;
 k_turn = 1;
 
