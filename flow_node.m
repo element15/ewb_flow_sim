@@ -11,7 +11,9 @@ classdef flow_node
                 return;
             end
             obj = flow_node;
-            obj.downstream_connections = dc;
+            if ~isempty(dc)
+                obj.downstream_connections = dc;
+            end
             obj.local_leaf = leaf;
         end
     end
