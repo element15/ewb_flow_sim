@@ -20,6 +20,9 @@ classdef flow_link
     end
     methods
         function obj = flow_link(dn, dia, l, dz, leaves, k)
+            if nargin < 6
+                return;
+            end
             obj = flow_link;
             obj.downstream_node = dn;
             obj.diameter = dia;

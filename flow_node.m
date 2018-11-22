@@ -7,6 +7,9 @@ classdef flow_node
     end
     methods
         function obj = flow_node(dc, leaf)
+            if nargin < 2
+                return;
+            end
             obj = flow_node;
             obj.downstream_connections = dc;
             obj.local_leaf = leaf;
