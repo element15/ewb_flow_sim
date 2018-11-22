@@ -244,51 +244,51 @@ k_turn = [800, 0.28, 1.9];
 AN = flow_node([], 32);
 AMAN = flow_link(AN, pvc('1/2'), 330, -160.08, countl(AN), k_thru);
 AM = flow_node(AMAN, 31);
-ALAM = flow_link(AM, pvc('1'), 100, 0.0, countl(AM), k_thru); %!dz
+ALAM = flow_link(AM, pvc('1'), 100, 0, countl(AM), k_thru);
 AL = flow_node(ALAM, 30);
-AKAL = flow_link(AL, pvc('1'), 100, 0.0, countl(AL), k_thru); %!dz
+AKAL = flow_link(AL, pvc('1'), 100, 0, countl(AL), k_thru);
 AK = flow_node(AKAL, 29);
 AHAK = flow_link(AK, pvc('1'), 100, -49.33, countl(AK), k_thru);
 
 AU = flow_node([], 27);
-AHAU = flow_link(AU, pvc('1/2'), 108.9, 0.0, countl(AU), k_turn); %!dz
+AHAU = flow_link(AU, pvc('1/2'), 108.9, 0, countl(AU), k_turn);
 AI = flow_node([], 28);
-AHAI = flow_link(AI, pvc('1/2'), 108.9, 0.0, countl(AI), k_turn); %!dz
+AHAI = flow_link(AI, pvc('1/2'), 108.9, 0, countl(AI), k_turn);
 
 AH = flow_node([AHAU, AHAK, AHAI], -1);
-AGAH = flow_link(AH, pvc('1'), 50.0, 0.0, countl(AH), k_thru); %!dz
+AGAH = flow_link(AH, pvc('1'), 50, 0, countl(AH), k_thru);
 AG = flow_node(AGAH, -1);
-ADAG = flow_link(AG, pvc('1'), 50.0, -25.88, countl(AG), k_thru);
+ADAG = flow_link(AG, pvc('1'), 50, -25.88, countl(AG), k_thru);
 
 AF = flow_node([], 25);
-ADAF = flow_link(AF, pvc('1/2'), 99.0, 0.0, countl(AF), k_turn); %!dz
+ADAF = flow_link(AF, pvc('1/2'), 99, 0, countl(AF), k_turn);
 AE = flow_node([], 26);
-ADAE = flow_link(AE, pvc('1/2'), 99.0, 0.0, countl(AE), k_turn); %!dz
+ADAE = flow_link(AE, pvc('1/2'), 99, 0, countl(AE), k_turn);
 
 AD = flow_node([ADAF, ADAE, ADAG], -1);
-AAAD = flow_link(AD, pvc('1'), 99.0, 0.0, countl(AD), k_thru); %!dz
+AAAD = flow_link(AD, pvc('1'), 99, 0, countl(AD), k_thru);
 
 AC = flow_node([], 23);
-AAAC = flow_link(AC, pvc('1/2'), 89.1, 0.0, countl(AC), k_turn); %!dz
+AAAC = flow_link(AC, pvc('1/2'), 89.1, 0, countl(AC), k_turn);
 AB = flow_node([], 24);
-AAAB = flow_link(AB, pvc('1/2'), 89.1, 0.0, countl(AB), k_turn); %!dz
+AAAB = flow_link(AB, pvc('1/2'), 89.1, 0, countl(AB), k_turn);
 
 AA = flow_node([AAAB, AAAC, AAAD], -1);
 ZAA = flow_link(AA, pvc('1'), 49.5, -117.79, countl(AA), k_thru);
 Z = flow_node(ZAA, 22);
-WZ = flow_link(Z, pvc('1'), 49.5, 0.0, countl(Z), k_thru); %!dz
+WZ = flow_link(Z, pvc('1'), 49.5, 0, countl(Z), k_thru);
 
 Y = flow_node([], 20);
-WY = flow_link(Y, pvc('1/2'), 99.0, 0.0, countl(Y), k_turn); %!dz
+WY = flow_link(Y, pvc('1/2'), 99, 0, countl(Y), k_turn);
 X = flow_node([], 21);
-WX = flow_link(X, pvc('1/2'), 99.0, 0.0, countl(X), k_turn); %!dz
+WX = flow_link(X, pvc('1/2'), 99, 0, countl(X), k_turn);
 
 W = flow_node([WX, WY, WZ], -1);
-SW = flow_link(W, pvc('1'), 100.0, -20.88, countl(W), k_thru);
+SW = flow_link(W, pvc('1'), 100, -20.88, countl(W), k_thru);
 S = flow_node(SW, -1);
-TS = flow_link(S, pvc('2'), 99.0, 0.0, countl(S), k_thru); %!dz
+TS = flow_link(S, pvc('2'), 99, 0, countl(S), k_thru);
 T = flow_node(TS, 19);
-RT = flow_link(T, pvc('2'), 66.0, -18.29, countl(T), k_turn);
+RT = flow_link(T, pvc('2'), 66, -18.29, countl(T), k_turn);
 
 U = flow_node([], 18);
 RU = flow_link(U, pvc('1/2'), 136, -43.21, countl(U), k_turn);
@@ -296,14 +296,14 @@ R = flow_node([RU, RT], -1);
 
 PR = flow_link(R, pvc('2'), 36, -15.5, countl(R), k_thru);
 Q = flow_node([], 17);
-PQ = flow_link(Q, pvc('1/2'), 52.0, -15.5, countl(Q), k_turn);
+PQ = flow_link(Q, pvc('1/2'), 52, -15.5, countl(Q), k_turn);
 P = flow_node([PQ, PR], -1);
 
 NP = flow_link(P, pvc('2'), 124, -30.66, countl(P), k_thru);
 O = flow_node([], 16);
-NO = flow_link(O, pvc('1/2'), 61, 0, countl(O), k_turn); %!dz
+NO = flow_link(O, pvc('1/2'), 61, 0, countl(O), k_turn);
 N = flow_node([NO, NP], 15);
-LN = flow_link(N, pvc('2'), 16, 0, countl(N), k_thru); %!dz
+LN = flow_link(N, pvc('2'), 16, 0, countl(N), k_thru);
 
 M = flow_node([], 14);
 LM = flow_link(M, pvc('1/2'), 51, -1.25, countl(M), k_turn);
