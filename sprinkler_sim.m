@@ -58,6 +58,7 @@ global g;
 link_in.head_out = link_in.head_in - link_in.delta_z - ...
     link_in.velocity^2 / 2 / g * head_loss_coefficient(link_in);
 link_in.pressure_iteration = link_in.pressure_iteration + 1;
+link_in.downstream_node.head = link_in.head_out;
 link_in.downstream_node = update_node_pressure(link_in.downstream_node);
 
 link_out = link_in;
