@@ -84,7 +84,7 @@ end
 
 function link_out = update_link_flow(link_in)
 link_in.velocity = link_in.downstream_node.flow / ...
-    (pi/4 * node_in.diameter^2);
+    (pi/4 * link_in.diameter^2);
 link_in.flow_iteration = link_in.flow_iteration + 1;
 update_node_flow(link_in.downstream_node);
 link_out = link_in;
