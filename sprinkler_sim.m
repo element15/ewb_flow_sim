@@ -12,12 +12,6 @@ gamma = 62.43   ; % spc. gravity, lbf/ft^3
 rough = 20e-6   ; % upper bound roughness for PVC, ft
 g     = 32.2    ; % acceleration of gravity, ft/s^2
 
-
-global leaf_list;
-leaf_list = [];
-
-
-
 % Data for sprinkler 1
 p_data = 5:2.5:35; % psi
 v_dot_data = [6.83, 7.77, 8.75, 9.53, 10.30, 10.82, 11.87, 12.29, ...
