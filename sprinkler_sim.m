@@ -186,7 +186,7 @@ end
 % y = a * sqrt(x), and also return the R^2 value for the curve fit. This
 % curve fit assumes that the coefficient `a` is strictly positive.
 function [a_out, R2_out] = square_root_fit(x_v, y_v)
-a_lo = 1e-3; % Initial lower bound
+a_lo = 1e-4; % Initial lower bound
 a_hi = 1e+3; % Initial upper bound
 
 y  = @(a, x) a .* x.^0.5; % This equation is the form desired
