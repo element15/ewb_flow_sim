@@ -41,7 +41,7 @@ end
 
 for i = 1:length(node_in.downstream_connections)
     node_in.downstream_connections(i).head_in = node_in.head;
-    node_in.downsteram_connections(i) = ...
+    node_in.downstream_connections(i) = ...
         update_link_pressure(node_in.downstream_connections(i));
 end
 i = node_in.local_leaf;
