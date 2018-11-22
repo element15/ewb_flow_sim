@@ -13,10 +13,8 @@ classdef flow_link
         head_in                     double = 0; % heat feet at inlet, ft
         % Secondary state parameters
         head_out                    double = 0; % heat feet at outlet, ft
-        % Minor head loss at upstream end (3K Method)
-        K_1                         double      % dimensionless
-        K_inf                       double      % dimensionless
-        K_d                         double      % ft^0.3
+        % Minor head loss at upstream end
+        K                           double      % dimensionless
     end
     methods
         function obj = flow_link(dn, dia, l, dz, leaves, k)
@@ -29,9 +27,7 @@ classdef flow_link
             obj.length = l;
             obj.delta_z = dz;
             obj.all_downstream_leaves = leaves;
-            obj.K_1 = k(1);
-            obj.K_inf = k(2);
-            obj.K_d = k(3);
+            obj.K = k;
         end
     end
 end

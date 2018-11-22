@@ -121,13 +121,7 @@ end
 % minor head losses
 function c = head_loss_coefficient(link)
 f = friction_factor(link.diameter, link.velocity);
-if link.velocity == 0
-    K = 0;
-else
-    K = link.K_1 / reynolds(link.diameter, link.velocity) + ...
-        link.K_inf * (1 + link.K_d / link.diameter^0.3);
-end
-c = f * link.length / link.diameter + K;
+c = f * link.length / link.diameter + link.K;
 end
 
 % Given a nominal pipe size, return the inner diameter of the corresponding
@@ -243,8 +237,8 @@ end
 % NOTE: 4 in^0.3 = 1.9 ft^0.3 (units of k_d)
 % All nodes modeled as tees, assuming flanged joins. Data from Neutrium 
 % (https://neutrium.net/fluid_flow/pressure-loss-from-fittings-3k-method)
-k_thru = [150, 0.05, 1.9];
-k_turn = [800, 0.28, 1.9];
+k_thru = 0.4;
+k_turn = 1;
 
 AN = flow_node([], 32);
 AMAN = flow_link(AN, pvc('1/2'), 330, -160.08, countl(AN), k_thru);
