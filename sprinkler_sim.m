@@ -105,11 +105,10 @@ end
 if start_node.local_leaf ~= -1
     list = [start_node.local_leaf];
 end
-if isempty(start_node.downstream_connections)
-    return;
-end
-for link = start_node.downstream_connections
-    cat(1, list, link.all_downstream_leaves);
+if ~isempty(start_node.downstream_connections)
+    for link = start_node.downstream_connections
+        list = cat(1, list, link.all_downstream_leaves);
+    end
 end
 end
 
