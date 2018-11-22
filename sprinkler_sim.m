@@ -309,6 +309,57 @@ M = flow_node([], 14);
 LM = flow_link(M, pvc('1/2'), 51, -1.25, countl(M), k_turn);
 L = flow_node([LM, LN], -1);
 
+KL = flow_link(L, pvc('2'), 84, 0, countl(L), k_turn);
+n13 = flow_node([], 13);
+
+% According to the layout diagram, this node flows uphill, as indicated by
+% the positive delta-z.
+PFB5 = flow_link(n13, pvc('1/2'), 55.8, 30.5, countl(n13), k_turn);
+
+K = flow_node([PFB5, KL], -1);
+GK = flow_link(K, pvc('2'), 14, -23.13, countl(K), k_turn);
+
+J = flow_node([], 12);
+IJ = flow_link(J, pvc('1'), 155, -24.88, countl(J), k_turn);
+I = flow_node(IJ, 11);
+HI = flow_link(I, pvc('1'), 95, 0, countl(I), k_turn);
+H = flow_node(HI, 10);
+GH = flow_link(H, pvc('1'), 61, -35.08, countl(H), k_turn);
+
+G = flow_node([GH, GK], 9);
+FG = flow_link(G, pvc('2'), 148, 0, countl(G), k_turn);
+F = flow_node(FG, -1);
+EF = flow_link(F, pvc('2'), 91, -38.62, countl(F), k_thru);
+
+% Many of the lengths and delta-z values in this set of unsurveyed nodes
+% and links may be extremely rough estimates. Unsurveyed points are
+% designated by sprinkler number, rather than letter. Nodes given by a `Z`
+% designation are non-sprinkler, non-survey-point nodes.
+n8 = flow_node([], 8);
+n7n8 = flow_link(n8, pvc('1'), 200, 0, countl(n8), k_thru);
+n7 = flow_node(n7n8, 7);
+% One half of PFB3
+Z1n7 = flow_link(n7, pvc('1'), 269/2, -18.08/2, countl(n7), k_thru);
+n6 = flow_node([], 6);
+Z1n6 = flow_link(n6, pvc('1'), 20, 0, countl(n6), k_turn);
+Z1 = flow_node([Z1n6, Z1n7], -1);
+% Other half of PFB3
+n5Z1 = flow_node(Z1, pvc('1'), 269/2, -18.08/2,countl(Z1), k_turn);
+n5 = flow_node(n5Z1, 5);
+En5 = flow_link(n5, pvc('1'), 20, 0, countl(n5), k_turn);
+
+E = flow_node([En5, EF], -1);
+DE = flow_link(E, pvc('2'), 89, -16.63, countl(E), k_thru);
+
+% More non-survey sprinkler nodes
+n4 = flow_node([], 4);
+PFB2 = flow_link(n4, pvc('1'), 119, 0, countl(n4), k_thru);
+n3 = flow_node(PFB2, 3);
+Dn3 = flow_link(n3, pvc('1'), 20, 0, countl(n3), k_turn);
+
+D = flow_node([Dn3, DE], -1);
+
+
 root = [];
 end
 
