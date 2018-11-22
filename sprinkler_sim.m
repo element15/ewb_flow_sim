@@ -35,6 +35,9 @@ global leaf_list;
 function node_out = update_node_pressure(node_in)
 global leaf_list;
 % Exit condition
+if node_in.head_limit > 0 % then a PRV is present at this node
+    node_in.head = min(node_in.head, node_in.head_limit);
+end
 if ~isempty(node_in.downstream_connections)
     for i = 1:length(node_in.downstream_connections)
         node_in.downstream_connections(i).head_in = node_in.head;
@@ -278,7 +281,11 @@ AAAB = flow_link(AB, pvc('1/2'), 89.1, 0, countl(AB), k_turn);
 
 AA = flow_node([AAAB, AAAC, AAAD], -1);
 ZAA = flow_link(AA, pvc('1'), 49.5, -117.79, countl(AA), k_thru);
+
 Z = flow_node(ZAA, 22);
+global gamma;
+Z.head_limit = 30*144/gamma; % This is where the PRV is installed
+
 WZ = flow_link(Z, pvc('1'), 49.5, 0, countl(Z), k_thru);
 
 Y = flow_node([], 20);
