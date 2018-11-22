@@ -72,8 +72,11 @@ if ind ~= -1
 end
 if ~isempty(node_in.downstream_connections) % Exit condition
     for i = 1:length(node_in.downstream_connections)
-        for j = node_in.downstream_connections(i).all_downstream_leaves(:)
+        j = 1;
+        while j <= length( ...
+                node_in.downstream_connections(i).all_downstream_leaves)
             flow = flow + get_leaf_flow(j);
+            j = j + 1;
         end
         node_in.downstream_connections(i) = ...
             update_link_flow(node_in.downstream_connections(i));
