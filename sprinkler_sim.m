@@ -345,7 +345,7 @@ n6 = flow_node([], 6);
 Z1n6 = flow_link(n6, pvc('1'), 20, 0, countl(n6), k_turn);
 Z1 = flow_node([Z1n6, Z1n7], -1);
 % Other half of PFB3
-n5Z1 = flow_node(Z1, pvc('1'), 269/2, -18.08/2,countl(Z1), k_turn);
+n5Z1 = flow_link(Z1, pvc('1'), 269/2, -18.08/2, countl(Z1), k_turn);
 n5 = flow_node(n5Z1, 5);
 En5 = flow_link(n5, pvc('1'), 20, 0, countl(n5), k_turn);
 
