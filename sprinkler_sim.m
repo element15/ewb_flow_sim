@@ -24,8 +24,27 @@ v_dot = @(p) a .* p.^0.5; % Function for the curve fit
 global leaf_list;
 [root, leaf_list] = init();
 
+% Run some number of pressure/flow calculation iterations
+n = 12;
+leaf_flows = zeros(n, length(leaf_list));
+for i = 1:n
+    for j = 1:2
+        root = update_node_pressure(root);
+        root = update_node_flow(root);
+    end
+    for j = 1:length(leaf_list)
+        leaf_flows(i, j) = leaf_list{j}.head;
+    end
+end
 
-
+% Display leaf head history
+for i = 1:length(leaf_list)
+    fprintf('%2d: ', i);
+    for j = (n-11):1:n
+        fprintf('%4.0f ', leaf_flows(j, i));
+    end
+    fprintf('\n');
+end
 
 % Given a node in the system, update the inbound head of every connected
 % link, and call update_link_pressure() on each of those links, which will
@@ -247,9 +266,11 @@ end
 k_thru = 0.4;
 k_turn = 1;
 
+
 AN = flow_node([], 32);
 AMAN = flow_link(AN, pvc('1/2'), 330, -160.08, countl(AN), k_thru);
 AM = flow_node(AMAN, 31);
+
 ALAM = flow_link(AM, pvc('1'), 100, 0, countl(AM), k_thru);
 AL = flow_node(ALAM, 30);
 AKAL = flow_link(AL, pvc('1'), 100, 0, countl(AL), k_thru);
@@ -262,6 +283,7 @@ AI = flow_node([], 28);
 AHAI = flow_link(AI, pvc('1/2'), 108.9, 0, countl(AI), k_turn);
 
 AH = flow_node([AHAU, AHAK, AHAI], -1);
+AH = flow_node([AHAU, AHAI], -1);
 AGAH = flow_link(AH, pvc('1'), 50, 0, countl(AH), k_thru);
 AG = flow_node(AGAH, -1);
 ADAG = flow_link(AG, pvc('1'), 50, -25.88, countl(AG), k_thru);
