@@ -75,7 +75,8 @@ if ~isempty(node_in.downstream_connections) % Exit condition
         for j = node_in.downstream_connections(i).all_downstream_leaves(:)
             flow = flow + get_leaf_flow(j);
         end
-        update_link_flow(node_in.downstream_connections(i));
+        node_in.downstream_connections(i) = ...
+            update_link_flow(node_in.downstream_connections(i));
     end
 end
 node_in.flow = flow;
@@ -86,7 +87,7 @@ function link_out = update_link_flow(link_in)
 link_in.velocity = link_in.downstream_node.flow / ...
     (pi/4 * link_in.diameter^2);
 link_in.flow_iteration = link_in.flow_iteration + 1;
-update_node_flow(link_in.downstream_node);
+link_in.downstream_node = update_node_flow(link_in.downstream_node);
 link_out = link_in;
 end
 
