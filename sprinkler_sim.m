@@ -110,7 +110,7 @@ end
 if isempty(start_node.downstream_connections)
     return;
 end
-for link = flow_node.downstream_connections
+for link = start_node.downstream_connections
     cat(1, list, link.all_downstream_leaves);
 end
 end
