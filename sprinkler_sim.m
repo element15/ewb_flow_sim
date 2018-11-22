@@ -92,7 +92,8 @@ end
 
 function flow = get_leaf_flow(index)
 global leaf_list;
-flow = leaf_list(index).flow_function(leaf_list(index).head);
+l = leaf_list{index};
+flow = l.flow_function(l.head);
 end
 
 % Given a node, generate a list including the local leaf (if any), as well
