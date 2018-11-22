@@ -358,9 +358,26 @@ n3 = flow_node(PFB2, 3);
 Dn3 = flow_link(n3, pvc('1'), 20, 0, countl(n3), k_turn);
 
 D = flow_node([Dn3, DE], -1);
+CD = flow_link(D, pvc('2'), 35, -31.06, countl(D), k_thru);
+C = flow_node(CD, -1);
+BC = flow_link(C, pvc('2'), 34, 0, countl(C), k_thru);
+
+% More non-survey sprinkler nodes
+n2 = flow_node([], 2);
+PFB1 = flow_link(n2, pvc('2'), 137, 0, countl(n2), k_thru);
+n1 = flow_node(PFB1, 1);
+Bn1 = flow_link(n1, pvc('2'), 20, 0, countl(n1), k_turn);
+
+B = flow_node([BC, Bn1], -1);
+AB = flow_link(B, pvc('3'), 124.4, 0, countl(B), k_thru);
+A = flow_node(AB, -1);
+
+% Connection to A from the upper tank `ut`
+utA = flow_link(A, pvc('3'), 203.6, -50, countl(A), k_thru);
+ut = flow_node(utA, -1);
 
 
-root = [];
+root = ut;
 end
 
 
