@@ -6,6 +6,7 @@ global gamma;
 global rough;
 global g;
 global a;
+global leaf_limit;
 global pressure_update_alpha;
 % Properties of water at 40 deg F
 mu    = 32.34e-6; % viscosity, lbf*s/ft^2
@@ -13,6 +14,7 @@ rho   =  1.94   ; % density, slug/ft^3
 gamma = 62.43   ; % spc. gravity, lbf/ft^3
 rough = 20e-6   ; % upper bound roughness for PVC, ft
 g     = 32.2    ; % acceleration of gravity, ft/s^2
+leaf_limit = 5 / 448.83117;
 pressure_update_alpha = 0.75;
 
 % Data for sprinkler 1
@@ -253,18 +255,19 @@ end
 % node of the system, `root`, as well as (2) a list of sprinkler heads
 % (leaves) which are referenced by nodes in the system, `leaves`.
 function [root, leaves] = init()
+global leaf_limit;
 % Define the leaves first
 leaf_count = 32;
 leaves = cell(leaf_count, 1);
 global a;
-flow_func = @(v) min(a * v.^0.5, 0.05);
+flow_func = @(v) min(a * v.^0.5, leaf_limit);
 for i = 1:leaf_count
     leaves{i} = flow_leaf();
     leaves{i}.flow_function = flow_func;
 end
 
 % Start from the bottom and work towards the root.
-% All nodes modeled as tees, assuming flanged joins. Data from Neutrium 
+% All nodes modeled as tees, assuming flanged joins. Data from Neutrium
 % (https://neutrium.net/fluid_flow/...
 % pressure-loss-from-fittings-excess-head-k-method/)
 k_thru = 0.4;
