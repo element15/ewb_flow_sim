@@ -42,7 +42,7 @@ end
 % Display leaf head history
 for i = 1:length(leaf_list)
     fprintf('%2d: ', i);
-    for j = (n-11):1:n
+    for j = (n-min(8-1, n-1)):1:n
         fprintf('%4.0f ', leaf_flows(j, i));
     end
     fprintf('\n');
