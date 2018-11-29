@@ -29,7 +29,7 @@ global leaf_list;
 [root, leaf_list] = init();
 
 % Run some number of pressure/flow calculation iterations
-n = 12;
+n = 32;
 leaf_flows = zeros(n, length(leaf_list));
 for i = 1:n
     root = update_node_pressure(root);
