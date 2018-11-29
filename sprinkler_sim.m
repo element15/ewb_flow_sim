@@ -120,8 +120,12 @@ node_out = node_in;
 end
 
 function link_out = update_link_flow(link_in)
-link_in.velocity = link_in.downstream_node.flow / ...
-    (pi/4 * link_in.diameter^2);
+flow = 0;
+for i = 1:length(link_in.all_downstream_leaves)
+    flow = flow + get_leaf_flow(link_in.all_downstream_leaves(i));
+end
+
+link_in.velocity = flow / (pi/4 * link_in.diameter^2);
 link_in.flow_iteration = link_in.flow_iteration + 1;
 link_in.downstream_node = update_node_flow(link_in.downstream_node);
 link_out = link_in;
