@@ -48,6 +48,10 @@ for i = 1:length(leaf_list)
     fprintf('\n');
 end
 
+% fprintf('\n\n\n');
+% dump_node(root);
+
+
 % Given a node in the system, update the inbound head of every connected
 % link, and call update_link_pressure() on each of those links, which will
 % recursively solve all downstream parts of the system. Note that minor
@@ -417,3 +421,28 @@ ut = flow_node('ut', utA, -1);
 
 root = ut;
 end
+
+
+
+function n = dump_node(node)
+i = 1;
+fprintf('===================\n');
+disp(node);
+while i <= length(node.downstream_connections)
+    dump_link(node.downstream_connections(i));
+    i = i + 1;
+end
+n = 0;
+end
+
+function n = dump_link(link)
+fprintf('\n');
+disp(link);
+fprintf('%d, ', link.all_downstream_leaves);
+fprintf('\n');
+if ~isempty(link.downstream_node)
+    dump_node(link.downstream_node);
+end
+n = 0;
+end
+
