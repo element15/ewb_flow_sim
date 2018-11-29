@@ -263,6 +263,7 @@ end
 % node of the system, `root`, as well as (2) a list of sprinkler heads
 % (leaves) which are referenced by nodes in the system, `leaves`.
 function [root, leaves] = init()
+global gamma;
 global leaf_limit;
 % Define the leaves first
 leaf_count = 32;
@@ -285,6 +286,7 @@ k_turn = 1;
 AN = flow_node('AN', [], 32);
 AMAN = flow_link('AMAN', AN, pvc('1/2'), 330, -160.08, countl(AN), k_thru);
 AM = flow_node('AM', AMAN, 31);
+% AM.head_limit = 30*144/gamma;
 
 ALAM = flow_link('ALAM', AM, pvc('1'), 100, 0, countl(AM), k_thru);
 AL = flow_node('AL', ALAM, 30);
@@ -318,7 +320,6 @@ AAAB = flow_link('AAAB', AB, pvc('1/2'), 89.1, 0, countl(AB), k_turn);
 AA = flow_node('AA', [AAAB, AAAC, AAAD], -1);
 ZAA = flow_link('ZAA', AA, pvc('1'), 49.5, -117.79, countl(AA), k_thru);
 
-global gamma;
 Z = flow_node('Z', ZAA, 22);
 Z.head_limit = 30*144/gamma; % This is where the PRV is installed
 
