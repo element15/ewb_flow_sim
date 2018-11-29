@@ -30,10 +30,8 @@ global leaf_list;
 n = 12;
 leaf_flows = zeros(n, length(leaf_list));
 for i = 1:n
-    for j = 1:2
-        root = update_node_pressure(root);
-        root = update_node_flow(root);
-    end
+    root = update_node_pressure(root);
+    root = update_node_flow(root);
     for j = 1:length(leaf_list)
         leaf_flows(i, j) = leaf_list{j}.head;
     end
