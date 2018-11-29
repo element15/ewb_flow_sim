@@ -1,6 +1,7 @@
 classdef flow_link
     properties
         % Intrensic parameters
+        name                        string
         downstream_node             flow_node   % links connected to lower end
         diameter                    double      % pipe diameter, ft
         length                      double      % pipe length, ft
@@ -17,11 +18,12 @@ classdef flow_link
         K                           double      % dimensionless
     end
     methods
-        function obj = flow_link(dn, dia, l, dz, leaves, k)
-            if nargin < 6
+        function obj = flow_link(name_in, dn, dia, l, dz, leaves, k)
+            if nargin < 7
                 return;
             end
             obj = flow_link;
+            obj.name = name_in;
             obj.downstream_node = dn;
             obj.diameter = dia;
             obj.length = l;
