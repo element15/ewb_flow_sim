@@ -6,12 +6,14 @@ global gamma;
 global rough;
 global g;
 global a;
+global pressure_update_alpha;
 % Properties of water at 40 deg F
 mu    = 32.34e-6; % viscosity, lbf*s/ft^2
 rho   =  1.94   ; % density, slug/ft^3
 gamma = 62.43   ; % spc. gravity, lbf/ft^3
 rough = 20e-6   ; % upper bound roughness for PVC, ft
 g     = 32.2    ; % acceleration of gravity, ft/s^2
+pressure_update_alpha = 0.75;
 
 % Data for sprinkler 1
 p_data = (5:2.5:35) .* 12^2; % psf
@@ -53,6 +55,7 @@ end
 % link.
 function node_out = update_node_pressure(node_in)
 global leaf_list;
+global pressure_update_alpha;
 % Exit condition
 if node_in.head_limit > 0 % then a PRV is present at this node
     node_in.head = min(node_in.head, node_in.head_limit);
@@ -66,7 +69,10 @@ if ~isempty(node_in.downstream_connections)
 end
 i = node_in.local_leaf;
 if i ~= -1
-    leaf_list{i}.head = node_in.head;
+    % Change head in leaf by weighted average to combat resonance
+    prev_head = leaf_list{i}.head;
+    leaf_list{i}.head = node_in.head * (1-pressure_update_alpha)...
+        + prev_head * pressure_update_alpha;
 end
 
 node_out = node_in;
