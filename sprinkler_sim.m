@@ -8,6 +8,7 @@ global g;
 global a;
 global leaf_limit;
 global pressure_update_alpha;
+global hose_k;
 % Properties of water at 40 deg F
 mu    = 32.34e-6; % viscosity, lbf*s/ft^2
 rho   =  1.94   ; % density, slug/ft^3
@@ -16,6 +17,7 @@ rough = 20e-6   ; % upper bound roughness for PVC, ft
 g     = 32.2    ; % acceleration of gravity, ft/s^2
 leaf_limit = 5 / 448.83117;
 pressure_update_alpha = 0.75;
+hose_k = 1.08 * 50; % K/ft * ft
 
 % Data for sprinkler 1
 p_data = (5:2.5:35) .* 12^2; % psf
@@ -265,11 +267,18 @@ end
 function [root, leaves] = init()
 global gamma;
 global leaf_limit;
+global hose_k;
+global g;
 % Define the leaves first
 leaf_count = 32;
 leaves = cell(leaf_count, 1);
 global a;
-flow_func = @(v) min(a * v.^0.5, leaf_limit);
+hose_flow = @(v) a * v.^0.5;
+hose_velocity = @(flow) flow / (pi/4 * (0.5/12)^2);
+hose_loss = @(v) hose_k * hose_velocity(hose_flow(v))^2/2/g;
+flow_func = @(v) min(a * (v - hose_loss(v)).^0.5, leaf_limit);
+
+
 for i = 1:leaf_count
     leaves{i} = flow_leaf();
     leaves{i}.flow_function = flow_func;
