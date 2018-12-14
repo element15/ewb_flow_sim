@@ -31,7 +31,7 @@ global leaf_list;
 [root, leaf_list] = init();
 
 % Run some number of pressure/flow calculation iterations
-n = 32;
+n = 12;
 leaf_flows = zeros(n, length(leaf_list));
 for i = 1:n
     root = update_node_pressure(root);
@@ -44,7 +44,7 @@ end
 % Display leaf head history
 for i = 1:length(leaf_list)
     fprintf('%2d: ', i);
-    for j = (n-min(8-1, n-1)):1:n
+    for j = (n-min(1-1, n-1)):1:n
         fprintf('%4.0f ', leaf_flows(j, i));
     end
     fprintf('\n');
